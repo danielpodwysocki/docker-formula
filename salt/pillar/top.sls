@@ -1,0 +1,3 @@
+base:
+  '*':
+    - docker-formula/minion
