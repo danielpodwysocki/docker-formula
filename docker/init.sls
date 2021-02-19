@@ -18,19 +18,59 @@ python3-pip:
 docker:
   pip.installed
 
+{% if pillar.get('volumes') %}
+{% for volume in pillar['volumes'] %}
+{{ volume }}:
+  docker_volume.present
+{% endfor %}
+{% endif %}
 
-#portainer_data:
-#  docker_volume.present
+{% if pillar['containers'] is defined %}
+{% for container in pillar['containers'] %}
+{{ container.name }}:
+  docker_container.running:
+    - image: {{ container.image }} 
+{% if container.port_bindings is defined%}
+    - port_bindings: 
+  {% for port in container.port_bindings %}
+      - {{ port.from }}:{{ port.to }}
+  {% endfor %}
+{% endif %}
+ 
+{% if container.binds is defined %}
+    - binds:
+  {% for bind in container.binds %}
+      - {{ bind.host }}:{{ bind.cont }}
+  {% endfor %}
+{% endif %}
+
+
+{% if container.vars is defined %}
+    - environment:
+  {% for var in container.vars %}
+      - {{ var.name }}={{ var.value }}
+  {% endfor %}
+{% endif %}
+
+
+{% endfor %}
+{% endif %}
+
+{% if pillar['global_containers'] is defined %}
+{% for container in pillar['containers'] %}
+#placeholder if we find a use case for global conts (portainer, maybe traefik?
 
 #portainer:
 #  docker_container.running:
 #    - force: True
 #    - image: portainer/portainer-ce
 #    - port_bindings: 
-#[host port]:[container port]
 #      - 9000:9000
 #      - 8000:8000
 #    - restart_policy: always
 #    - binds:
 #      - portainer_data:/data
 #      - /var/run/docker.sock:/var/run/docker.sock
+
+{% endfor %}
+{% endif %}
