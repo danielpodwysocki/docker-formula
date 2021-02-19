@@ -6,11 +6,11 @@ volumes:
 containers:
   - name: portainer
     image: portainer/portainer-ce
-#    port_bindings:
-#      - from: 9000
-#        to: 9000
-#      - from: 8000
-#        to: 8000
+    port_bindings:
+      - from: 9000
+        to: 9000
+      - from: 8000
+        to: 8000
     binds:
       - host: /var/run/docker.sock
         cont: /var/run/docker.sock
