@@ -6,6 +6,7 @@ volumes:
 containers:
   - name: portainer
     image: portainer/portainer-ce
+    restart_policy: always
     port_bindings:
       - from: 9000
         to: 9000

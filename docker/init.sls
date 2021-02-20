@@ -29,7 +29,8 @@ docker:
 {% for container in pillar['containers'] %}
 {{ container.name }}:
   docker_container.running:
-    - image: {{ container.image }} 
+    - image: {{ container.image }}
+    - restart_policy: {{ container.restart_policy }} 
 {% if container.port_bindings is defined%}
     - port_bindings: 
   {% for port in container.port_bindings %}
