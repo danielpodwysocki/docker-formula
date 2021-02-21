@@ -1,3 +1,6 @@
+/test:
+  file.managed
+
 role:
   grains.present:
     - value: docker
