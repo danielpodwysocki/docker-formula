@@ -1,3 +1,8 @@
+role:
+  grains.present:
+    - value: docker
+
+
 Add docker repo:
   pkgrepo.managed:
     - name: deb [arch=amd64] https://download.docker.com/linux/debian	buster	stable
