@@ -2,7 +2,6 @@
 volumes:
   - portainer_data
 
-
 containers:
   - name: portainer
     image: portainer/portainer-ce
