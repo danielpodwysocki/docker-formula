@@ -23,6 +23,15 @@ python3-pip:
 docker:
   pip.installed
 
+/bind_mounts
+
+{% if pillar.get('bind_mounts') %}
+{% for bind_mount in pillar['bind_mounts'] %}
+/bind_mounts/{{bind_mount}}
+{% endfor %}
+{% endif %}
+
+
 {% if pillar.get('volumes') %}
 {% for volume in pillar['volumes'] %}
 {{ volume }}:
