@@ -1,4 +1,7 @@
 #don't name it same as the container, or there will be a name conflict!
+docker-compose:
+  - services.yml #a file named like this entry needs to exist under salt://docker-compose/services.yml
+
 volumes:
   - portainer_data
 

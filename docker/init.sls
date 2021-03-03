@@ -23,6 +23,23 @@ python3-pip:
 docker:
   pip.installed
 
+/srv/docker-compose:
+  file.directory
+
+{% if pillar['docker-compose'] is defined %}
+{% for file in pillar['docker-compose'] %}
+/srv/docker-compose/{{ file }}:
+  file.managed:
+    - source: salt://docker-compose/{{ file }}
+
+docker-compose -f /srv/docker-compose/{{ file }} up -d:
+  cmd.run:
+    - onchanges:
+      - file: /srv/docker-compose/{{ file }}
+
+{% endfor %}
+{% endif%}
+
 {% if pillar.get('volumes') %}
 {% for volume in pillar['volumes'] %}
 {{ volume }}:
