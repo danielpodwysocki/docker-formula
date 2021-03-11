@@ -31,6 +31,7 @@ docker:
 /srv/docker-compose/{{ file }}:
   file.managed:
     - source: salt://docker-compose/{{ file }}
+    - template: jinja
 
 docker-compose -f /srv/docker-compose/{{ file }} up -d:
   cmd.run:
